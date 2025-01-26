@@ -14,4 +14,11 @@ export class AppController {
   getHeathState(): string {
     return 'Health check endpoint';
   }
+
+  @Get('data')
+  getData() {
+    return {
+      data: 'hello guy!',
+    };
+  }
 }

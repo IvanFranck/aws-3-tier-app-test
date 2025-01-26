@@ -2,7 +2,6 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import axios from "axios"
 
 function App() {
   const [serverResponse, setServerResponse] = useState("");
@@ -10,21 +9,18 @@ function App() {
   const [timeout, setReqTimeout] = useState(1500);
 
   async function handleServerCall() {
-    const axiosInstance = axios.create({
-      timeout,
-      baseURL: apiUrl,
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'text/plain',
-      },
-    })
 
-    axiosInstance.get('').then(resp => {
-      if (resp && resp.data) {
-        setServerResponse(resp.data)
-      }
-    })
+    await fetch(apiUrl)
+      .then(response => {
+        console.log(response)
+        setServerResponse(response)
+        return response
+      })
+      .catch(error => console.error(error))
+
   }
+
+
 
   function handleInpuApiUrl(e) {
     setApiUrl(e.target.value)

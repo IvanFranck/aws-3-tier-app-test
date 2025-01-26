@@ -5,12 +5,13 @@ import './App.css'
 import axios from "axios"
 
 function App() {
-  const [serverResponse, setServerResponse] = useState("")
-  const [apiUrl, setApiUrl] = useState("")
+  const [serverResponse, setServerResponse] = useState("");
+  const [apiUrl, setApiUrl] = useState("");
+  const [timeout, setReqTimeout] = useState(1500);
 
   async function handleServerCall() {
     const axiosInstance = axios.create({
-      timeout: 30000,
+      timeout,
       baseURL: apiUrl,
       headers: {
         'Content-Type': 'application/json',
@@ -41,6 +42,7 @@ function App() {
       <h1>Vite + React</h1>
       <div className="card">
         <input type='text' value={apiUrl} onInput={handleInpuApiUrl} placeholder='TYpe the server URL' />
+        <input type='number' value={timeout} onInput={(e) => setReqTimeout(e.target.value)} />
         <button onClick={handleServerCall}>
           Contact the server
         </button>

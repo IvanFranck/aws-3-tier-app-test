@@ -12,6 +12,6 @@ export class AppController {
 
   @Get('health')
   getHeathState(): string {
-    return 'ok';
+    return 'Health check endpoint';
   }
 }

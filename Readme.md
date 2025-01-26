@@ -72,7 +72,7 @@ BRANCH_NAME="main"
 REPO_DIR="my-app"
 FULL_PATH_REPO_DIR="/home/ec2-user/$REPO_DIR/frontend"
 ENV_FILE="$FULL_PATH_REPO_DIR/.env"
-APP_TIER_ALB_URL="http://<internal-application-tier-alb-end-point.region.elb.amazonaws.com>"  # Replace with your actual alb endpoint
+
 
 
 # Clone the repository as ec2-user
@@ -86,9 +86,6 @@ cd frontend
 
 # Ensure ec2-user owns the directory
 sudo chown -R ec2-user:ec2-user /home/ec2-user/my-app
-
-# Create .env file with the API_URL
-echo "VITE_API_URL=\"$API_URL\"" >> "$ENV_FILE"
 
 # Install Node.js dependencies as ec2-user
 sudo -u ec2-user pnpm install
@@ -156,13 +153,6 @@ server {
         try_files \$uri /index.html;
     }
 
-    location /api/ {
-        proxy_pass $APP_TIER_ALB_URL;
-        proxy_set_header Host \$host;
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto \$scheme;
-    }
 }
 EOL
 
